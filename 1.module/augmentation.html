@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Document</title>
+    </head>
+
+    <body></body>
+    <script>
+        (function() {
+            var a = 1;
+            window.module = {
+                c: function() {
+                    return a;
+                }
+            };
+        })();
+
+        (function(mod) {
+            var b = 2;
+            mod.d = function() {
+                return b;
+            };
+        })(window.module || {});
+
+        console.log(module.c());
+        console.log(module.d());
+        console.log(module);
+    </script>
+</html>

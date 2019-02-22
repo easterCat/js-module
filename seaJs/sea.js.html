@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>sea.js</title>
+  </head>
+  <body id="bg">
+    <button id="change">点我我变色</button>
+  </body>
+  <script src="./lib/sea.js"></script>
+  <script>
+    seajs.config({
+      alias: {
+        underscore: "underscore.js",
+        init: "./src/init.js",
+        color: "./src/color.js"
+      }
+    });
+
+    seajs.use(["underscore", "init"], function(u, init) {
+      init.start();
+    });
+  </script>
+</html>

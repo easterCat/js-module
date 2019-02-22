@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    <li>a</li>
+    <li>b</li>
+    <li>c</li>
+    <li>d</li>
+    <li>e</li>
+</ul>
+</body>
+<script>
+    var lis = document.querySelectorAll('li');
+    for(var i=0;i<5;i++){
+        lis[i].onclick = function(){
+            alert(i); //5,5,5,5,5
+        }
+    }
+
+    //又是这个经典的题目
+    //这题最简单还是用元素属性的方式去解决,比如
+
+    for(var i=0;i<5;i++){
+        lis[i].index = i;
+        lis[i].onclick = function(){
+            alert(this.index); //0,1,2,3,4
+        }
+    }
+
+    //还有就是闭包
+    for(var i=0;i<5;i++){
+        (function(i){
+            lis[i].onclick = function(){
+                alert(i); //0,1,2,3,4
+            }
+        })(i)
+    }
+    //闭包就是在循环中执行,将i的值保存到当前作用域中,当click绑定的函数触发时,会优先从离得最近的作用域去拿变量(就近原则)
+
+    //所以,使用其他的方式将当前i值保存到自己的作用域中就行
+    for(var i=0;i<5;i++){
+        click(i);
+    }
+
+    function click(i){
+        lis[i].onclick = function(){
+            alert(i); //0,1,2,3,4
+        }
+    }
+    //这其实就跟上面的闭包有些类似了,闭包取i是从上级的匿名函数的作用域中去保存的i,而该方式就是从click函数的作用域中去取i值
+</script>
+</html>
