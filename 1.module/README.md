@@ -203,12 +203,10 @@ console.log(module);
     //这其实就跟上面的闭包有些类似了,闭包取i是从上级的匿名函数的作用域中取保存的i,而该方式就是从click函数的作用域中去取i值
 ```
 
-#### 参考文章（本文无关的好文章也会记录做备份）
-
-[浏览器加载 CommonJS 模块的原理与实现](http://www.ruanyifeng.com/blog/2015/05/commonjs-in-browser.html)
-[Javascript 模块化编程（一）：模块的写法](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html)
-[JavaScript Module Pattern: In-Depth](http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html)
-[Seajs 与 RequireJS 的异同](https://github.com/seajs/seajs/issues/277)
-[AMD 和 CMD 的区别有哪些?](https://www.zhihu.com/question/20351507)
-[Common Module Definition / draft](https://github.com/cmdjs/specification/blob/master/draft/module.md)
-[js-module-7day](http://huangxuan.me/js-module-7day)
+- [浏览器加载 CommonJS 模块的原理与实现](http://www.ruanyifeng.com/blog/2015/05/commonjs-in-browser.html)
+- [Javascript 模块化编程（一）：模块的写法](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html)
+- [JavaScript Module Pattern: In-Depth](http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html)
+- [Seajs 与 RequireJS 的异同](https://github.com/seajs/seajs/issues/277)
+- [AMD 和 CMD 的区别有哪些?](https://www.zhihu.com/question/20351507)
+- [Common Module Definition / draft](https://github.com/cmdjs/specification/blob/master/draft/module.md)
+- [js-module-7day](http://huangxuan.me/js-module-7day)
