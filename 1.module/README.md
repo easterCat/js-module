@@ -203,6 +203,13 @@ console.log(module);
     //这其实就跟上面的闭包有些类似了,闭包取i是从上级的匿名函数的作用域中取保存的i,而该方式就是从click函数的作用域中去取i值
 ```
 
+#### 模块化的作用
+
+1. 解决全局变量污染的问题
+2. 一个文件一个模块，能够更快速定位问题和解决问题，方便维护
+3. 解决文件的依赖关系问题
+4. 使大型项目的开发过程中，每个人负责每个人的模块编写，方便大团队开发工作
+
 - [浏览器加载 CommonJS 模块的原理与实现](http://www.ruanyifeng.com/blog/2015/05/commonjs-in-browser.html)
 - [Javascript 模块化编程（一）：模块的写法](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html)
 - [JavaScript Module Pattern: In-Depth](http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html)

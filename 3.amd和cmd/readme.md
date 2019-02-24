@@ -4,19 +4,54 @@
 
 ## 2. AMD
 
-AMD(Asynchronous Module Definition)，意思就是"异步模块定义"。它采用异步方式加载模块，模块的加载不影响它后面语句的运行。所有依赖这个模块的语句，都定义在一个回调函数中，等到加载完成之后，这个回调函数才会运行
+AMD(Asynchronous Module Definition)，意思就是"异步模块定义"。它采用异步方式加载模块，制定了定义模块的规则，这样模块和模块的依赖可以被异步加载，不影响它后面语句的运行。所有依赖这个模块的语句，都定义在一个回调函数中，等到加载完成之后，这个回调函数才会运行。这和浏览器的异步加载模块的环境刚好适应（浏览器同步加载模块会导致性能、可用性、调试和跨域访问等问题）
 
-#### 2.1 define(module,callback)定义模块,require(module,callback)加载模块
+#### 2.1 define 函数定义模块
+
+本规范只定义了一个函数 "define"，它是全局变量 define(id?, dependencies?, factory)，参数分别是模块名，依赖，工厂方法
+
+#### 2.2 require(module,callback)加载模块
+
+- 引入 require.js
 
 ```
-require(['jquery'],function($){
-    $("#bg").css({background:'red'});
+<script type=”text/javascript” defer async=”true” src=”./require.js”></script>
+<script type=”text/javascript” defer async=”true” src=”js/init.js”></script>
+```
+
+- init.js
+
+```
+//require.config 主要是用来对要加载文件的目录进行自定义
+require.config({
+  baseUrl: 'js',
+  paths: {
+    "jquery": "../lib/jquery",
+    "undersocre": "../lib/underscore",
+  }
 })
+
+require(['jquery', 'underscore'], function ($, _) {
+    $(window).resize(function () {
+
+        var color = ["rgba(", Math.floor(Math.random() * 255), ",", Math.floor(Math.random() * 255), ",", Math.floor(Math.random() * 255), ")"];
+
+        $(".background").css({
+            position: "fixed",
+            top: "0px",
+            bottom: "0px",
+            left: "0px",
+            right: "0px",
+            background: color.join("")
+        });
+    })
+
+});
 ```
 
 第一个参数是一个数组，值是依赖的模块。回调事件会在所有依赖模块加载完毕后才会执行
 
-#### 2.2 预加载,在定义模块的时候就提前加载好所有模块
+#### 2.3 预加载,在定义模块的时候就提前加载好所有模块
 
 ## 3. CMD
 
@@ -36,9 +71,11 @@ define(factory)定义模块
 4. 如果个 factory 不是一个函数（对象，字符串），这是模块的接口就是当前对象，字符串
 
 ```
+
 define(function(require, exports, module) {
-  // do something
+// do something
 });
+
 ```
 
 ##### 3.2 require
@@ -76,68 +113,75 @@ define(function(require, exports, module) {
 
 这是 seajs 对象上绑定的属性和方法
 
-![seajs01](https://github.com/easterCat/common_es6/blob/master/module/amd%E5%92%8Ccmd/img/seajs01.png?raw=true)
+![seajs01](https://github.com/easterCat/js-module/blob/master/3.amd%E5%92%8Ccmd/img/seajs01.png?raw=true)
 
 color.js
 
 ```
 
 define("color", function(require, exports, module) {
-  var $ = require("jquery");
+var \$ = require("jquery");
 
-  var createColor = function() {
-    return ["rgba(", Math.floor(Math.random() * 255), ",", Math.floor(Math.random() * 255), ",", Math.floor(Math.random() * 255), ")"];
-  };
+var createColor = function() {
+return ["rgba(", Math.floor(Math.random() * 255), ",", Math.floor(Math.random() * 255), ",", Math.floor(Math.random() * 255), ")"];
+};
 
-  module.exports = {
-    changeBg: function() {
-      $("#bg").css({
-        position: "fixed",
-        top: "0px",
-        bottom: "0px",
-        left: "0px",
-        right: "0px",
-        background: createColor().join("")
-      });
-    }
-  };
+module.exports = {
+changeBg: function() {
+\$("#bg").css({
+position: "fixed",
+top: "0px",
+bottom: "0px",
+left: "0px",
+right: "0px",
+background: createColor().join("")
 });
+}
+};
+});
+
 ```
 
 使用非函数的工厂包装模块 text.js
 
 ```
+
 define({
-  text: "我是初始化程序",
-  text2: "我要开始执行了"
+text: "我是初始化程序",
+text2: "我要开始执行了"
 });
+
 ```
 
 init.js
 
 ```
-define("init", function(require, exports, module) {
-  var color = require("../src/color");
-  var initText = require("../src/text");
-  var $ = require("jquery");
 
-  module.exports = {
-    start: function() {
-      console.log(initText.text + "," + initText.text2);
-      $(function() {
+define("init", function(require, exports, module) {
+var color = require("../src/color");
+var initText = require("../src/text");
+var \$ = require("jquery");
+
+module.exports = {
+start: function() {
+console.log(initText.text + "," + initText.text2);
+$(function() {
         $("#change").click(function() {
-          color.changeBg();
-        });
-      });
-    }
-  };
+color.changeBg();
 });
+});
+}
+};
+});
+
 ```
 
 sea.js.html
 
 ```
+
 ...
+
 <body id="bg">
     <button id="change">点我我变色</button>
 </body>
@@ -151,15 +195,16 @@ sea.js.html
     }
   });
 
-  seajs.use(["underscore", "init"], function(u, init) {
-    init.start();
-  });
+seajs.use(["underscore", "init"], function(u, init) {
+init.start();
+});
 </script>
 ...
+
 ```
 
 目录结构
-![seajs02](https://github.com/easterCat/common_es6/blob/master/module/amd%E5%92%8Ccmd/img/seajs02.png?raw=true)
+![seajs02](https://github.com/easterCat/js-module/blob/master/3.amd%E5%92%8Ccmd/img/seajs02.png?raw=true)
 
 #### 3.8 seajs 引入其他插件或库
 
@@ -168,28 +213,31 @@ sea.js.html
 一些库不支持模块引入或者只支持 amd 规范的引入方式，不支持 cmd。所有需要对库进行一些改造
 
 ```
+
 //Underscore.js 1.9.1
 if (typeof define === "function" && define.amd && define.amd.jQuery) {
-    define("underscore", [], function() {
-      return _;
-    });
+define("underscore", [], function() {
+return \_;
+});
 }
-
 
 //更改如下
 if (typeof define === "function" && (define.amd || define.cmd)) {
-    define("underscore", [], function() {
-      return _;
-    });
+define("underscore", [], function() {
+return _;
+});
 }
-//或者整个define的判断不要了
+//或者整个 define 的判断不要了
 if (typeof define === "function") {
-    define("underscore", [], function() {
-      return _;
-    });
+define("underscore", [], function() {
+return _;
+});
 }
+
 ```
 
 - [Common Module Definition](https://github.com/cmdjs/specification/blob/master/draft/module.md)
 - [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD)
+- [AMD 中文](<https://github.com/amdjs/amdjs-api/wiki/AMD-(中文版)>)
 - [require.js 基本使用](https://www.cnblogs.com/mybilibili/p/6773952.html)
+- [requirejs 中文网](http://requirejs.cn/)
