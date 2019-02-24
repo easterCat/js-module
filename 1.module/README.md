@@ -210,6 +210,8 @@ console.log(module);
 3. 解决文件的依赖关系问题
 4. 使大型项目的开发过程中，每个人负责每个人的模块编写，方便大团队开发工作
 
+#### 参考
+
 - [浏览器加载 CommonJS 模块的原理与实现](http://www.ruanyifeng.com/blog/2015/05/commonjs-in-browser.html)
 - [Javascript 模块化编程（一）：模块的写法](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html)
 - [JavaScript Module Pattern: In-Depth](http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html)
