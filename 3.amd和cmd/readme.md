@@ -123,19 +123,19 @@ define("color", function(require, exports, module) {
 var \$ = require("jquery");
 
 var createColor = function() {
-return ["rgba(", Math.floor(Math.random() * 255), ",", Math.floor(Math.random() * 255), ",", Math.floor(Math.random() * 255), ")"];
+  return ["rgba(", Math.floor(Math.random() * 255), ",", Math.floor(Math.random() * 255), ",", Math.floor(Math.random() * 255), ")"];
 };
 
 module.exports = {
-changeBg: function() {
-\$("#bg").css({
-position: "fixed",
-top: "0px",
-bottom: "0px",
-left: "0px",
-right: "0px",
-background: createColor().join("")
-});
+  changeBg: function() {
+  \$("#bg").css({
+    position: "fixed",
+    top: "0px",
+    bottom: "0px",
+    left: "0px",
+    right: "0px",
+    background: createColor().join("")
+  });
 }
 };
 });
@@ -163,14 +163,14 @@ var initText = require("../src/text");
 var \$ = require("jquery");
 
 module.exports = {
-start: function() {
-console.log(initText.text + "," + initText.text2);
-$(function() {
-        $("#change").click(function() {
-color.changeBg();
-});
-});
-}
+  start: function() {
+    console.log(initText.text + "," + initText.text2);
+      $(function() {
+              $("#change").click(function() {
+      color.changeBg();
+      });
+    });
+  }
 };
 });
 
@@ -196,7 +196,7 @@ sea.js.html
   });
 
 seajs.use(["underscore", "init"], function(u, init) {
-init.start();
+  init.start();
 });
 </script>
 ...
@@ -216,24 +216,47 @@ init.start();
 
 //Underscore.js 1.9.1
 if (typeof define === "function" && define.amd && define.amd.jQuery) {
-define("underscore", [], function() {
-return \_;
+  define("underscore", [], function() {
+  return \_;
 });
 }
 
 //更改如下
 if (typeof define === "function" && (define.amd || define.cmd)) {
-define("underscore", [], function() {
-return _;
+  define("underscore", [], function() {
+  return _;
 });
 }
 //或者整个 define 的判断不要了
 if (typeof define === "function") {
-define("underscore", [], function() {
-return _;
+  define("underscore", [], function() {
+  return _;
 });
 }
 
+```
+
+## UMD
+
+是一种思想，就是一种兼容 commonjs,AMD,CMD 的兼容写法，define.amd / define.cmd / module 等判断当前支持什么方式，都不行就挂载到 window 全局对象上面去
+
+```
+(function (root, factory) {
+    if (typeof define === 'function' && (define.amd || define.cmd)) {
+        //AMD,CMD
+        define(['b'], function(b){
+          return (root.returnExportsGlobal = factory(b))
+        });
+    } else if (typeof module === 'object' && module.exports) {
+        //Node, CommonJS之类的
+        module.exports = factory(require('b'));
+    } else {
+        //公开暴露给全局对象
+        root.returnExports = factory(root.b);
+    }
+}(this, function (b) {
+  return {};
+}));
 ```
 
 - [Common Module Definition](https://github.com/cmdjs/specification/blob/master/draft/module.md)
