@@ -1,5 +1,7 @@
 ## 前端模块化
 
+![前端模块化](https://github.com/easterCat/js-module/blob/master/1.module/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96.png?raw=true)
+
 #### 前端早期写代码都是全局变量满天飞,这种情况会造成全局命名空间污染,变量冲突等问题
 
 ```
